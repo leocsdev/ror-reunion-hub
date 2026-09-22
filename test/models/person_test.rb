@@ -14,7 +14,29 @@ require "test_helper"
 #  updated_at  :datetime         not null
 #
 class PersonTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  test "requires a first name" do
+    person = build(:person, first_name: nil)
+
+    assert_not person.valid?
+    assert_includes person.errors[:first_name], "can't be blank"
+  end
+
+  test "requires a last name" do
+    person = build(:person, last_name: nil)
+
+    assert_not person.valid?
+    assert_includes person.errors[:last_name], "can't be blank"
+  end
+
+  test "normalizes email by stripping whitespace and downcasing" do
+    person = create(:person, email: "  Alum@Example.com  ")
+
+    assert_equal "alum@example.com", person.email
+  end
+
+  test "blank email normalizes to nil" do
+    person = create(:person, email: "   ")
+
+    assert_nil person.email
+  end
 end
