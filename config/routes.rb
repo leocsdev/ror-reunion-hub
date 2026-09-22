@@ -11,4 +11,6 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
+
+  get "reunions/:reunion_id/rsvp/:token", to: "rsvp_access#show", as: :rsvp_access
 end

@@ -24,4 +24,36 @@
 class ReunionMembership < ApplicationRecord
   belongs_to :person
   belongs_to :reunion
+
+  attr_reader :rsvp_token
+
+  before_validation :issue_rsvp_token, on: :create
+
+  def self.find_by_rsvp_token(token)
+    return if token.blank?
+
+    find_by(rsvp_token_digest: digest_rsvp_token(token))
+  end
+
+  def regenerate_rsvp_token!
+    token = SecureRandom.urlsafe_base64(32)
+
+    update!(rsvp_token_digest: self.class.digest_rsvp_token(token))
+    @rsvp_token = token
+  rescue ActiveRecord::RecordNotUnique
+    retry
+  end
+
+  def self.digest_rsvp_token(token)
+    Digest::SHA256.hexdigest(token)
+  end
+
+  private
+
+  def issue_rsvp_token
+    return if rsvp_token_digest.present?
+
+    @rsvp_token = SecureRandom.urlsafe_base64(32)
+    self.rsvp_token_digest = self.class.digest_rsvp_token(rsvp_token)
+  end
 end
