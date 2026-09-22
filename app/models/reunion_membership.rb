@@ -25,6 +25,8 @@ class ReunionMembership < ApplicationRecord
   belongs_to :person
   belongs_to :reunion
 
+  validates :person_id, uniqueness: { scope: :reunion_id }
+
   attr_reader :rsvp_token
 
   before_validation :issue_rsvp_token, on: :create
