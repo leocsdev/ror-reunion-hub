@@ -68,4 +68,7 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
+
+  # Generate test data with factories instead of fixtures [https://github.com/thoughtbot/factory_bot_rails]
+  gem "factory_bot_rails"
 end
