@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 8.1.3", ">= 8.1.3.1"
+gem "rails", "~> 8.1.4"
 # Use the JSON library with a version less than 3
 # Ensures compatibility with Rails 8 and avoids potential issues with JSON parsing
 gem "json", "< 3"
